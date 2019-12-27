@@ -1,0 +1,29 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/html
+permissions:
+  - object: /var/www/html
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 644
+    type:
+      - file
+  - object: /var/www/html
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+    type:
+      - directory
+hooks:
+  AfterInstall:
+    - location: Scripts/composer.sh
+      timeout: 300
+      runas: www-data
+  ApplicationStart:   
+    - location: Scripts/restart.sh
+      timeout: 30
+      runas: root    
